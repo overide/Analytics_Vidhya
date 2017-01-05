@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block style %}
+	<link rel="stylesheet" href="{% static 'recruiter/css/search_form.css' %}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+<form id="filter_applcnt_form" class="form-inline filter-applcnt-form" method='POST' action='/recruiter/search/'>
+	{% csrf_token %}
+	{{form.non_field_errors}}
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group">
+			   	{{ form.candidate_name.errors}}
+			    {{ form.candidate_name.label_tag}}
+			    <br>
+			    {{ form.candidate_name}}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+			   	{{ form.email.errors}}
+			    {{ form.email.label_tag}}
+			    <br>
+			    {{ form.email}}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+			   	{{ form.work_exp.errors}}
+			    {{ form.work_exp.label_tag}}
+			    <br>
+			    {{ form.work_exp}}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+			   	{{ form.current_loc.errors}}
+			    {{ form.current_loc.label_tag}}
+			    <br>
+			    {{ form.current_loc}}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group">
+			   	{{ form.preffered_loc.errors}}
+			    {{ form.preffered_loc.label_tag}}
+			    <br>
+			    {{ form.preffered_loc}}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+			   	{{ form.ctc.errors}}
+			    {{ form.ctc.label_tag}}
+			    <br>
+			    {{ form.ctc}}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+			   	{{ form.skills.errors}}
+			    {{ form.skills.label_tag}}
+			    <br>
+			    {{ form.skills}}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+			   	{{ form.ug_course.errors}}
+			    {{ form.ug_course.label_tag}}
+			    <br>
+			    {{ form.ug_course}}
+			</div>
+		</div>
+	</div>
+  	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group">
+			   	{{ form.ug_tire1.errors}}
+			    {{ form.ug_tire1.label_tag}}
+			    <br>
+			    {{ form.ug_tire1}}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+			   	{{ form.pg_course.errors}}
+			    {{ form.pg_course.label_tag}}
+			    <br>
+			    {{ form.pg_course}}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+			   	{{ form.pg_tire1.errors}}
+			    {{ form.pg_tire1.label_tag}}
+			    <br>
+			    {{ form.pg_tire1}}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">	
+			<div class="form-group">
+				<input type='submit' class="btn btn-primary " value="Submit">
+			</div>
+		</div>
+	</div>
+</form>
+
+{% if submitted %}
+	{% if results %}
+		<br>
+		<div class="table-responsive">
+			<table class="table-bordered">
+				<thead>
+					<tr>
+						{% for attr in attributes %}
+							<th>{{attr}}</th>
+						{% endfor %}
+					</tr>
+				</thead>
+				</tbody>
+				<!-- show only 50 results,other can be downloaded as .csv file-->
+					{% for result in results %}
+						{% if forloop.counter != 50 %}
+							<tr>
+							{% for values in result%}
+								{% if not forloop.first %}
+									<td>{{values}}</td>
+								{% endif %}
+							{% endfor %}
+							<tr>
+						{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<br>
+		<div class="container text-center">
+			<form action="/recruiter/download_csv/" method="post" class="form-inline">
+			{% csrf_token %}
+			{{form.non_field_errors}}
+				<div class="form-group">
+					<button id="dl_csv_btn" type="submit" class="btn btn-danger">Download</button>
+				</div>
+			</form>
+		</div>
+	{% else %}
+		<p>No Match found</p>
+	{% endif %}
+{% endif %}
+{% endblock %}

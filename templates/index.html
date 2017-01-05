@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
+{% load staticfiles %}
+
+{% block style %}
+	<link rel="stylesheet" href="{% static 'recruiter/css/index.css' %}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+	  <div class="jumbotron" id="jumbotron-overrides">
+	    <h1 class="text-center">Manager</h1>
+	    <br>
+	    <div class="container mode-container">
+		    <h2>Admin</h2>
+		    <div class="row">
+				<div class="col-md-8">
+					<p>If you are <strong>Admin</strong> then click on Admin to perform admin related tasks</p>
+				</div>
+				<div class="col-md-4">
+				    <a href="/admin"><button class="btn btn-danger">Admin</button></a>
+				</div>
+		    </div>
+	    </div>
+	    <br><br>
+	    <div class="container mode-container">
+		    <h2>Recruiter</h2>
+		    <div class="row">
+				<div class="col-md-8">
+					<p>If you are <strong>Recruiter</strong> then click on Recruiter to perform search for filtering candidates according to your needs </p>
+				</div>
+				<div class="col-md-4">
+				{% if request.session.is_logged %}
+				    <a href="/recruiter/search"><button class="btn btn-danger">Recruiter</button></a>
+				{% else %}
+					<a href="#" data-toggle="modal" data-target="#signup-modal"><button class="btn btn-danger">Recruiter</button></a>
+				{% endif %}
+				</div>
+		    </div>
+	    </div>
+	 </div>
+	</div>
+{% endblock %}

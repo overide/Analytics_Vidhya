@@ -1,0 +1,95 @@
+html
+{
+	position: relative;
+	min-height: 100%;
+}
+body
+{
+	font: 400 15px/1.8 Lato, sans-serif;
+    color: #777;
+	
+}
+
+h1
+{
+	font-size: 70px;
+}
+#g-heart
+{
+	color:blue;
+}
+
+
+#engine
+{
+	color:white;
+	font-family: Montserrat;
+	padding:70px 120px;
+}
+
+/* ############################## Navigation Bar starts ####################################### */
+
+/* Add a dark background color with a little bit see-through */ 
+.navbar {
+    margin-bottom: 0;
+    background-color:#2d2d30;
+    border: 0;
+    font-size: 15px !important;
+    letter-spacing: 4px;
+    opacity:0.9;
+}
+
+/* Add a gray color to all navbar links */
+.navbar li a, .navbar .navbar-brand { 
+    color: #fff !important;
+}
+
+/* On hover, the links will turn white */
+.navbar-nav li a:hover {
+    color: #fff !important;
+}
+
+/* The active link */
+.navbar-nav li.active a {
+    color: #fff !important;
+    background-color:#29292c !important;
+}
+
+/* Remove border color from the collapsible button */
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+}
+
+/* Dropdown */
+.open .dropdown-toggle {
+    color: #fff ;
+    background-color: #555 !important;
+}
+
+/* Dropdown links */
+.dropdown-menu li a {
+    color: #000 !important;
+}
+
+/* On hover, the dropdown links will turn red */
+.dropdown-menu li a:hover {
+    background-color: red !important;
+}
+
+/*#################################### Navigaiton Bar Ends ############################################ */
+
+/*#################################### Footer start ################################################### */
+footer {
+    background-color: #2d2d30;
+    color: #f5f5f5;
+    padding:10px;
+    position:fixed;
+  	bottom: 0;
+  	width: 100%;
+}
+
+footer a {
+    color: #f5f5f5;
+}
+
+/*##################################### Footer ends ################################################## */

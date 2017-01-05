@@ -1,0 +1,173 @@
+/*
+  This is css for the base.html
+  Modify this for any change in Header and Footer
+*/
+
+html
+{
+	position: relative;
+	min-height: 100%;
+}
+body
+{
+	font: 400 15px/1.8 Lato, sans-serif;
+    color: #777;
+}
+
+h1
+{
+	font-size: 70px;
+}
+
+
+/* ############################## Navigation Bar starts ####################################### */
+
+/* Add a dark background color with a little bit see-through */ 
+.navbar{
+    margin-bottom: 0;
+      background-color: #333;
+      z-index: 9999;
+      border: 0;
+      font-size: 12px !important;
+      line-height: 1.42857143 !important;
+      letter-spacing: 4px;
+      border-radius: 0;
+}
+/* Add a gray color to all navbar links */
+.navbar li a, .navbar .navbar-brand {
+      color: #fff !important;
+  }
+  .navbar-nav li a:hover, .navbar-nav li.active a:active {
+      color: #333 !important;
+      background-color: #fff !important;
+  }
+  .navbar-nav li.no-effect a:hover{
+      color: #fff !important;
+      background-color: red !important;
+      cursor: pointer;
+  }
+  .navbar-default .navbar-toggle {
+      border-color: transparent;
+      color: #fff !important;
+  }
+/*#################################### Navigaiton Bar Ends ############################################ */
+
+/*#################################### Modal styles  starts ############################################*/
+/*Modal styles  starts*/
+.auth-popup-modal .modal-dialog{
+  max-width:500px;
+  max-height:400px;
+  top:60px;
+  font-family: helvetica;
+}
+.auth-popup-modal .modal-body
+{
+  background-color: #e2e2e2;
+  border:1px solid #808080;
+  border-left:none;
+  border-right: none;
+}
+.auth-popup-modal .glyphicon{
+  font-size: 20px;
+}
+.auth-popup-modal input{
+  height:35px;
+  border-radius:0em;
+}
+/*File Input CSS hack */
+.btn-file{
+  position:relative;
+  overflow:hidden;
+  background-color:transparent;
+  border:none;
+}
+.btn-file input[type=file]{
+  position:absolute;
+  top:0;
+  right:0;
+  min-width: 100%;
+  min-height:100%;
+  font-size: 100px;
+  text-align: right;
+  filter:alpha(opacity=0);
+  opacity:0;
+  outline: none;
+  background:transparent;
+  cursor: inherit;
+  display: block;
+}
+/*End of File input css hack */
+.connect-sm-btn
+{
+  width:360px;
+  height:60px;
+  background-color:#3b5998;
+  font-size:15px; 
+  position: relative;
+  top:-20px;
+}
+#modal-separator
+{
+  background-color:white;
+  font-family: helvetica;
+  font-size: 18px;
+  font-weight:lighter;
+  position: relative;
+  border:1px solid;
+  border-radius:5em;
+  top:-35px;
+  left:220px;
+  margin-bottom: 0px;
+  text-align:center;
+  width:40px;
+  height:40px;
+  margin:0px;
+}
+#modal-separator-text
+{
+    position: relative;
+    top: 5px;
+}
+#fb-f
+{
+  position:relative;
+  font-size:30px;
+  left:-20px;
+  font-weight: bolder;
+}
+#connect-sm-label
+{
+  position:relative;
+  top:-5px;
+  font-size:15px;
+}
+
+/*#################################### Signup Modal styles ###########################################*/
+#signup-modal .modal-dialog
+{
+  max-width:300px;
+  max-height:200px;
+  top:200px;
+  font-family: helvetica;
+}
+
+/*#################################### Signup Modal styles End ###########################################*/
+
+/*#################################### Modal styles  Ends ############################################*/
+
+/*#################################### Footer start ################################################### */
+#footer{
+    background-color: #2d2d30;
+    color: #fff;
+    padding:10px;
+  	width: 100%;
+}
+#footer a
+{
+    color:#fff;
+}
+#footer a i:hover {
+    color: #fff;
+}
+
+/*##################################### Footer ends ################################################## */

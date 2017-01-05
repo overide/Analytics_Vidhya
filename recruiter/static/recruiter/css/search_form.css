@@ -1,0 +1,40 @@
+/*
+	css file for search form which let recruiter to filter applicants on basis of fields provided
+	Change this for any change in search form
+*/
+
+.filter-applcnt-form
+{
+	padding:10px;
+	background-color: #eee;
+}
+.form-group
+{
+	padding:5px;
+}
+.form-control
+{
+	border-radius:0px;
+}
+.table-responsive table th
+{
+	background-color: #eee;
+}
+.table-responsive table th,.table-responsive table td
+{
+	padding:5px;
+	text-align: center;
+}
+
+/*Change this for modifying download button*/
+#dl_csv_btn
+{
+	font-size: 16px;
+	text-align: center;
+	vertical-align : middle;
+	position: relative;
+	width:300px;
+	height:45px;
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16),0 0 0 1px rgba(0,0,0,0.08);
+	border-radius:0px;
+}
