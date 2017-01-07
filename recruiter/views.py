@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import StreamingHttpResponse
+from django.http import StreamingHttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .forms import SearchApplicantForm
 from .models import Applicant
@@ -55,7 +55,7 @@ def create_query(key,modifier,filters,value):
 	key_value = {keyword:value,} 
 	return Q(**key_value)
 
-def _perform_search(field_values):
+def _perform_search(request,field_values):
 	"""
 	private function of search to search db 
 	arguments : field_value
@@ -74,7 +74,7 @@ def _perform_search(field_values):
 				values = get_tokens(value)
 				filters |= reduce(lambda x, y:x|y,[Q(skills__icontains=token) for token in values])
 
-			if key in ['candidate_name','current_loc','preffered_loc']:
+			if key in ['candidate_name','current_loc','preffered_loc','pg_course','ug_course']:
 				filters |= create_query(key,'i','contains',value)
 
 			if key in ['ctc','work_exp']:
@@ -106,9 +106,9 @@ def _search(request,form,fields=None):
 			#filter_request keep the (key,value) pair used to filter database upon last request
 			request.session['filter_request'] = request.POST
 
-			results = _perform_search(cd)
+			results = _perform_search(request,cd)
 	else:
-		results = _perform_search(fields)
+		results = _perform_search(request,fields)
 
 	return results,attributes
 
@@ -124,5 +124,9 @@ def search(request):
 		else:
 			return render(request,'search_form.html',{'form':form,'request':request})
 	else:
-		form = SearchApplicantForm()
-		return render(request,'search_form.html',{'form':form,'request':request})
+		if request.user.is_authenticated():
+			form = SearchApplicantForm()
+			return render(request,'search_form.html',{'form':form,'request':request})
+		else:
+			errors = ["Login is required to access this page!",]
+			return render(request,'error_page.html',{'errors':errors})

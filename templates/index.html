@@ -9,6 +9,14 @@
 {% block content %}
 	<div class="container">
 	  <div class="jumbotron" id="jumbotron-overrides">
+	  	{% if errors %}
+		  	{% for error in errors %}
+		  		<div class="alert alert-danger alert-dismissable fade in pagination-centered">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>Error!</strong> {{error}}
+				</div>
+		  	{% endfor %}
+		{% endif %}
 	    <h1 class="text-center">Manager</h1>
 	    <br>
 	    <div class="container mode-container">

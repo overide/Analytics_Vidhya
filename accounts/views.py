@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.contrib.auth import login,logout
+from django.contrib.auth import login,logout,authenticate
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
@@ -27,20 +27,20 @@ def register(request):
 			return HttpResponseRedirect('/recruiter/search/')
 		else:
 			return render(request,'index.html')
-			#TODO: send errors using Ajax
 	else:
 		return render(request,'index.html')
 
-def custom_authenticate(email,password):
+def custom_authenticate(email,pswrd):
 	"""
 		Custom authentication method which take email and password to authenticate user
 		rather than Django's default authentication based on username,password 
 	"""
-	is_valid=False
 	user = User.objects.filter(email__iexact = email)
 	if user:
-		if check_password(password,user[0].password):
-			return user[0]
+		if check_password(pswrd,user[0].password):
+			u_name = user[0].username
+			user = authenticate(username=u_name,password=pswrd)
+			return user
 	return None
 
 def login_view(request):
@@ -61,13 +61,15 @@ def login_view(request):
 					request.session['filter_request'] = None
 					return HttpResponseRedirect('/recruiter/search/')
 				else:
-					#TODO:redirecting to disabled account page
-					return HttpResponseRedirect('/')
+					errors=["This account is disabled!",]
+					return render(request,'error_page.html',{'errors':errors,})
 			else:
-				#TODO:display invalid login error using AJAX call
-				return HttpResponseRedirect('/')
+				errors = ["Invalid username or password!",]
+				return render(request,'index.html',{'errors':errors,})
 		else:
 			return HttpResponseRedirect('/')
+	else:
+		return HttpResponseRedirect('/')
 
 def logout_view(request):
 	"""

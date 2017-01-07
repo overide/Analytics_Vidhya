@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container" style="color:red;font-size:20px;">
+	{% for error in errors %}
+		<p>{{error}}</p>
+	{% endfor %}
+</div>
+{% endblock %}
