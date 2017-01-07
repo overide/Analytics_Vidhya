@@ -47,5 +47,11 @@ python manage.py createsuperuser
 For adding entries to database login to Admin from the access link provided by Admin button at homepage or this link **127.0.0.1:8000/admin**
 After successfull login, you can add entries to **Applicant** 
 
+## Populating database
+
+**recruiter.json** file contains some test records which can be used to populate the database for testing recruiter panel.Use following command to load data in database
+```
+python manage.py loaddata recruiter.json
+```
 ## Note
 In **setting.py** set **DEBUG** field to **False** if you want to deploy project on production. 
