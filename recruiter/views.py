@@ -66,22 +66,22 @@ def _perform_search(request,field_values):
 		if(value != '' and value != None and value != '-1' and key!='csrfmiddlewaretoken'):
 			if key in ['ug_tire1','pg_tire1']:
 				if key == 'pg_tire1':
-					filters |= Q(pg_tire1=BOOL_VALUES[value])
+					filters &= Q(pg_tire1=BOOL_VALUES[value])
 				else:
-					filters |= Q(ug_tire1=BOOL_VALUES[value])
+					filters &= Q(ug_tire1=BOOL_VALUES[value])
 
 			if key == 'skills':
 				values = get_tokens(value)
-				filters |= reduce(lambda x, y:x|y,[Q(skills__icontains=token) for token in values])
+				filters &= reduce(lambda x, y:x|y,[Q(skills__icontains=token) for token in values])
 
 			if key in ['candidate_name','current_loc','preffered_loc','pg_course','ug_course']:
-				filters |= create_query(key,'i','contains',value)
+				filters &= create_query(key,'i','contains',value)
 
 			if key in ['ctc','work_exp']:
-				filters |= create_query(key,'','lte',value)
+				filters &= create_query(key,'','lte',value)
 
 			if key == 'email':
-				filters |= Q(email__iexact=value)	
+				filters &= Q(email__iexact=value)	
 				
 	results = Applicant.objects.filter(filters).values_list()
 	return results
