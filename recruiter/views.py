@@ -3,6 +3,8 @@ from django.http import StreamingHttpResponse
 from django.contrib.auth.decorators import login_required
 from .forms import SearchApplicantForm
 from .models import Applicant
+from django.db.models import Q
+from functools import reduce
 import csv
 
 BOOL_VALUES={'1':'Yes','2':'No'}
@@ -30,27 +32,58 @@ def create_csv_stream(request):
 	response['Content-Disposition'] = 'attachment; filename="applicant_record.csv"'
 	return response
 
+def get_tokens(search_terms):
+	"""
+		return list of tokens in search term 
+	"""
+	search_terms= [token.strip(' ') for token in search_terms.split(',')]
+	return search_terms
+
+def create_query(key,modifier,filters,value):
+	"""
+		create Q objects for filter
+
+		Arguments usage:-
+		key = 'candidate_name'
+		modifier = 'i'
+		filters = 'contains'
+		value = 'john'
+
+		key_value will be like {'candidate_name__icontains':'john'}
+	"""
+	keyword = key+'__'+modifier+filters
+	key_value = {keyword:value,} 
+	return Q(**key_value)
+
 def _perform_search(field_values):
 	"""
 	private function of search to search db 
 	arguments : field_value
-	field_value is a list of filed value  
+	field_value is a list of field value  
 	"""
-	filter_list={}
+	filters=Q()
 	for(key,value) in field_values.items():
 		if(value != '' and value != None and value != '-1' and key!='csrfmiddlewaretoken'):
-			if(value in BOOL_VALUES):
-				filter_list[key]=BOOL_VALUES[value]
-			else:
-				if key == 'search':
-					key = key + '__in'
-					value = [x.strip(' ') for x in value.split(',')]
-				if key=='candidate_name' or key == 'current_loc' or key == 'preffered_loc' or key == 'skills' :
-					key = key + '__icontains'
-				if key=='ctc' or key=='work_exp':
-					key = key + '__lte'
-				filter_list[key]=value
-	results = Applicant.objects.filter(**filter_list).values_list()
+			if key in ['ug_tire1','pg_tire1']:
+				if key == 'pg_tire1':
+					filters |= Q(pg_tire1=BOOL_VALUES[value])
+				else:
+					filters |= Q(ug_tire1=BOOL_VALUES[value])
+
+			if key == 'skills':
+				values = get_tokens(value)
+				filters |= reduce(lambda x, y:x|y,[Q(skills__icontains=token) for token in values])
+
+			if key in ['candidate_name','current_loc','preffered_loc']:
+				filters |= create_query(key,'i','contains',value)
+
+			if key in ['ctc','work_exp']:
+				filters |= create_query(key,'','lte',value)
+
+			if key == 'email':
+				filters |= Q(email__iexact=value)	
+				
+	results = Applicant.objects.filter(filters).values_list()
 	return results
 
 def _search(request,form,fields=None):
