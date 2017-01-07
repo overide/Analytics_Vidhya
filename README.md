@@ -1,5 +1,5 @@
 # Analytics_Vidhya
-This is my project for web intern challenge @ Analytics Vidhya
+This is my project for web developer intern challenge @ Analytics Vidhya
 
 ## Project
 analytics
